@@ -1,0 +1,41 @@
+name: MaximusBans
+version: '${project.version}'
+main: com.pincerdevelopment.MaximusBansBukkit
+prefix: MaximusBans
+authors: [ PincerPrithu ]
+description: Robust, lightweight and standalone punishment management plugin
+website: maximus.pincerdevelopment.com
+commands:
+  ban:
+    description: Bans a player.
+    usage: /ban <Player> [reason] (tags -ip -anticheat, -automod)
+    permission: maximusbans.ban
+  tempban:
+    description: Temporarily bans a player.
+    usage: /tempban <Player> <Duration> [reason] (tags -ip -anticheat, -automod)
+    permission: maximusbans.tempban
+  mute:
+    description: Mutes a player.
+    usage: /ban <Player> [reason] (tags -ip, -automod)
+    permission: maximusbans.mute
+  tempmute:
+    description: Temporarily mutes a player.
+    usage: /tempban <Player> <Duration> [reason] (tags -ip, -automod)
+    permission: maximusbans.tempmute
+  history:
+    description: View the history of punishments.
+    usage: /history <player|issuer> <UUID|name>
+    permission: maximusbans.history
+  unban:
+    description: Unbans a player.
+    usage: /unban <Player|IP> [reason]
+    permission: maximusbans.unban
+    aliases: pardon
+  unmute:
+    description: Unmutes a player.
+    usage: /unmute <Player|IP> [reason]
+    permission: maximusbans.unmute
+  kick:
+    description: Kicks a player.
+    usage: /kick <Player> [reason]
+    permission: maximusbans.kick

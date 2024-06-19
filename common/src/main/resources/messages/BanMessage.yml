@@ -1,0 +1,9 @@
+ban-message:
+  - "&cYou have been &4&lpermanently banned &cfrom the server!"
+  - ""
+  - "&c&lReason: &7{reason}"
+  - "&c&lBanned by: &7{issuer}"
+  - "&c&lBan ID: &7{id}"
+  - ""
+  - "&c&lAppeal at: &7{appeal}"
+  - "{footer}"

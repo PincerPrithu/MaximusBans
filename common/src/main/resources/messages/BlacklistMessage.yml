@@ -1,0 +1,11 @@
+blacklist-message:
+  - "&c==================== &4&lBlacklist Notice &c===================="
+  - "&cYou have been &4&lpermanently &0&lBlacklisted &cfrom the server!"
+  - ""
+  - "&c&lReason: &7{reason}"
+  - "&c&lBanned by: &7{issuer}"
+  - "&c&lBlacklist ID: &7{id}"
+  - ""
+  - "&c&lThis punishment cannot be appealed."
+  - "{footer}"
+  - "&c========================================================="

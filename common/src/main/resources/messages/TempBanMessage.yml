@@ -1,0 +1,13 @@
+tempban-message:
+  - "&cYou have been temporarily banned from the server!"
+  - ""
+  - "&cReason: &7{reason}"
+  - "&cDuration: &7{duration}"
+  - ""
+  - "&cBanned by: &7{issuer}"
+  - "&cDate Issued: &7{dateIssued}"
+  - "&cDate Expiry: &7{dateExpiry}"
+  - "&cBan ID: &7{id}"
+  - ""
+  - "&cAppeal at: &7{appeal}"
+  - "{footer}"

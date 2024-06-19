@@ -1,0 +1,18 @@
+config-version: 1
+
+# Defines which language to use. Default available languages are en.
+# If you want to add a new language, create a new file in the language folder and add its name.
+# For example, if you add French, you will have to create a file named fr.yml in the language folder and add set below to fr.
+language: en
+
+# Defines which database type to use.
+# Options are MySQL, Postgres, Microsoft SQL Server, H2, Derby, HSQLDB, and Sqlite.
+# If you only have one server use Sqlite or H2. MySQL will be perfect for multiple servers or bungee.
+DB-type: sqlite
+
+# Database connection details
+DB-host: localhost
+DB-port: 3306
+DB-name: maximusbans
+DB-user: root
+DB-pass: password
