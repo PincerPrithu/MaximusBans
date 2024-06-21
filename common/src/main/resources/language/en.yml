@@ -1,3 +1,5 @@
+config-version: 1
+
 messages:
   general:
     player_not_found: "&cPlayer not found."
@@ -6,6 +8,7 @@ messages:
     player_is_not_online: "&cPlayer is not online."
     already_banned: "&cThat player is already banned with a longer punishment!"
     already_muted: "&cThat player is already muted with a longer punishment!"
+    ban_extended_reason: "Ban Extended"
     unban_failed: "&cFailed to unban player: {error}"
     unmute_failed: "&cFailed to unmute player: {error}"
     ban_failed: "&cFailed to ban player: {error}"
@@ -46,6 +49,32 @@ messages:
   history:
     header: "&aPunishments (Page {current_page}/{total_pages}):"
     footer: "&eUse /history <player/issuer> <UUID/PlayerName> <page> to view other pages."
-    punishment_separator: "&e============================"
-    punishment_format: "&2Punishment Type: &f{type}\n&2Issued By: &f{issuer}\n&2Issuer Type: &f{issuer_type}\n&2Occurrence: &f{occurrence}\n&2Expiry: &f{expiry}\n&2Reason: &f{reason}\n"
-    pardon_format: "&2Pardon Date: &f{pardon_date}\n&2Pardoned By: &f{pardon_issuer}\n&2Pardon Issuer Type: &f{pardon_issuer_type}\n&2Pardon Reason: &f{pardon_reason}\n"
+    separator: "&e============================"
+    punishment: "&2Punishment Type: &f{type}\n&2Issued By: &f{issuer}\n&2Issuer Type: &f{issuer_type}\n&2Issue Date: &f{occurrence_date}\n&2Expiry: &f{expiry}\n&2Reason: &f{reason}\n"
+    pardon: "&2Pardon Date: &f{pardon_date}\n&2Pardoned By: &f{pardon_issuer}\n&2Pardon Issuer Type: &f{pardon_issuer_type}\n&2Pardon Reason: &f{pardon_reason}\n"
+
+  default_reason:
+    kick: "Kicked from the server."
+    ban: "The Ban Hammer has spoken!"
+    tempban: "The Ban Hammer has spoken!"
+    blacklist: "Serious Offenses"
+    mute: "Serious Inappropriate Behavior"
+    tempmute: "Inappropriate Behavior"
+
+  unban:
+    default_reason: "Unbanned by staff."
+    success: "&aSuccessfully unbanned player {target}."
+    ip_success: "&aSuccessfully unbanned IP {ip}."
+    not_banned: "&cPlayer {target} is not banned."
+    ip_not_banned: "&cIP {ip} is not banned."
+    failed: "&cFailed to unban player: {error}"
+    failed_ip: "&cFailed to unban IP: {error}"
+
+  unmute:
+    default_reason: "Unmuted by staff."
+    success: "&aSuccessfully unmuted player {target}."
+    ip_success: "&aSuccessfully unmuted IP {ip}."
+    not_muted: "&cPlayer {target} is not muted."
+    ip_not_muted: "&cIP {ip} is not muted."
+    failed: "&cFailed to unmute player: {error}"
+    failed_ip: "&cFailed to unmute IP: {error}"

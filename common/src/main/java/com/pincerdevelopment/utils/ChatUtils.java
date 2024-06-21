@@ -2,7 +2,6 @@ package com.pincerdevelopment.utils;
 
 import com.pincerdevelopment.Main;
 import com.pincerdevelopment.Punishment;
-import com.pincerdevelopment.Universal.CustomPlatform;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,7 +23,7 @@ public class ChatUtils {
 
         switch (Punishment.IssuerType.valueOf(punishment.getIssuerType())) {
             case PLAYER:
-                issuer = Main.getPlatform().getPlayerByUUID(punishment.getIssuerUUID()).getName();
+                issuer = Main.getPlatform().getPlayerUsernameByUUID(punishment.getIssuerUUID());
                 break;
             case ANTICHEAT:
                 issuer = "AntiCheat";
@@ -49,7 +48,7 @@ public class ChatUtils {
         x = x.replace("{dateExpiry}", formatDate(punishment.getTimeOfExpiry()));
         x = x.replace("{id}", punishment.getPunishmentID());
 
-        return (x);
+        return (Main.getPlatform().colorize(x));
     }
 
     public static List<String> decode(String str) {

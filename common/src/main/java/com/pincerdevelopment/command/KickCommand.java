@@ -25,14 +25,14 @@ public class KickCommand {
         }
 
         String targetIdentifier = args[0];
-        StringBuilder reasonBuilder = new StringBuilder(Main.getLang().getMessage("messages.kick.default_reason"));
+        StringBuilder reasonBuilder = new StringBuilder(Main.getLang().getMessage("messages.default_reason.kick"));
 
         boolean kickByIP = false;
         for (int i = 1; i < args.length; i++) {
             if (args[i].equalsIgnoreCase("-ip")) {
                 kickByIP = true;
             } else if (!args[i].startsWith("-")) {
-                if (reasonBuilder.toString().equals(Main.getLang().getMessage("messages.kick.default_reason"))) {
+                if (reasonBuilder.toString().equals(Main.getLang().getMessage("messages.default_reason.kick"))) {
                     reasonBuilder = new StringBuilder(args[i]);
                 } else {
                     reasonBuilder.append(" ").append(args[i]);
@@ -69,6 +69,7 @@ public class KickCommand {
             handleIPKick(sender, playerIP, reason, issuerUUID, issuerType);
         } else {
             target.kickPlayer(reason);
+            System.out.println(reason);
             logKickToDatabase(targetUUID, null, reason, issuerUUID, issuerType);
             sender.sendMessage(Main.getLang().getMessage("messages.kick.success", "target", target.getName(), "reason", reason));
         }
@@ -79,7 +80,8 @@ public class KickCommand {
             InetAddress targetIP = InetAddress.getByName(ip);
             for (CustomPlayer player : Main.getPlatform().getOnlinePlayers()) {
                 if (player.getAddress().equals(targetIP)) {
-                    player.kickPlayer(Main.getLang().getMessage("messages.kick.by_ip", "reason", reason));
+                    player.kickPlayer(reason);
+                    System.out.println(reason);
                     logKickToDatabase(player.getUniqueId(), targetIP, reason, issuerUUID, issuerType);
                 }
             }

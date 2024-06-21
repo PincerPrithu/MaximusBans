@@ -8,4 +8,6 @@ public interface CustomPlatform {
     CustomPlayer getPlayerByName(String name);
     List<CustomPlayer> getOnlinePlayers();
     UUID getUUIDFromIdentifier(String identifier);
+    public String getPlayerUsernameByUUID(UUID uuid);
+    String colorize(String message);
 }

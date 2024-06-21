@@ -40,13 +40,13 @@ public class HistoryCommand {
                 }
 
                 if (punishments.isEmpty()) {
-                    sender.sendMessage(Main.getLang().getMessage("messages.general.no_punishments_found", "type", type));
+                    sender.sendMessage(Main.getLang().getMessage("messages.general.history_no_results", "type", type));
                 } else {
                     paginateResults(sender, punishments, page);
                 }
             } catch (Exception e) {
-                sender.sendMessage(Main.getLang().getMessage("messages.general.fetch_error"));
-                e.printStackTrace(); // To help debug any SQL issues
+                sender.sendMessage(Main.getLang().getMessage("messages.general.history_error"));
+                e.printStackTrace(); // Print the stack trace for detailed error logging
             }
         });
     }
@@ -71,7 +71,7 @@ public class HistoryCommand {
         int startIndex = (page - 1) * pageSize;
         int endIndex = Math.min(startIndex + pageSize, totalPunishments);
 
-        sender.sendMessage(Main.getLang().getMessage("messages.history.header", "page", String.valueOf(page), "totalPages", String.valueOf(totalPages)));
+        sender.sendMessage(Main.getLang().getMessage("messages.history.header", "current_page", String.valueOf(page), "total_pages", String.valueOf(totalPages)));
 
         for (int i = startIndex; i < endIndex; i++) {
             Punishment punishment = punishments.get(i);
@@ -89,18 +89,18 @@ public class HistoryCommand {
     private static String formatPunishment(Punishment punishment) {
         return Main.getLang().getMessage("messages.history.punishment",
                 "type", punishment.getPunishmentType().toString(),
-                "issuedBy", (punishment.getIssuerUUID() != null ? Main.getPlatform().getPlayerByUUID(punishment.getIssuerUUID()).getName() : "CONSOLE"),
-                "issuerType", punishment.getIssuerType(),
-                "occurrence", punishment.getTimeOfOccurrence().toString(),
+                "issuer", (punishment.getIssuerUUID() != null ? Main.getPlatform().getPlayerUsernameByUUID(punishment.getIssuerUUID()) : "CONSOLE"),
+                "issuer_type", punishment.getIssuerType(),
+                "occurrence_date", punishment.getTimeOfOccurrence().toString(),
                 "expiry", (punishment.getTimeOfExpiry() != null ? punishment.getTimeOfExpiry().toString() : "N/A"),
                 "reason", punishment.getReason());
     }
 
     private static String formatPardon(Punishment punishment) {
         return Main.getLang().getMessage("messages.history.pardon",
-                "pardonDate", punishment.getPardonDate().toString(),
-                "pardonedBy", (punishment.getIssuerUUID() != null ? Main.getPlatform().getPlayerByUUID(punishment.getIssuerUUID()).getName() : "CONSOLE"),
-                "pardonIssuerType", punishment.getPardonIssuerType(),
-                "pardonReason", punishment.getPardonReason());
+                "pardon_date", punishment.getPardonDate().toString(),
+                "pardoned_by", (punishment.getIssuerUUID() != null ? Main.getPlatform().getPlayerUsernameByUUID(punishment.getIssuerUUID()) : "CONSOLE"),
+                "pardon_issuer_type", punishment.getPardonIssuerType(),
+                "pardon_reason", punishment.getPardonReason());
     }
 }

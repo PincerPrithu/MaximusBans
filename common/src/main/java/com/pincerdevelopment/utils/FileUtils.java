@@ -53,6 +53,12 @@ public class FileUtils {
         }
         YamlDocument config = null;
         try {
+
+            if (type == FileType.MESSAGE) {
+                config = YamlDocument.create(new File(path), stream);
+                return config;
+            }
+
             config = YamlDocument.create(new File(path), stream
                     , GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(),
                     DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version")).build());

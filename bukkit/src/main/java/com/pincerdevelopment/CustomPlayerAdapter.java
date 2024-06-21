@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 public class CustomPlayerAdapter implements CustomPlayer {
     private final OfflinePlayer player;
@@ -28,7 +27,7 @@ public class CustomPlayerAdapter implements CustomPlayer {
 
     @Override
     public String getName() {
-        return player.getName();
+        return Bukkit.getOfflinePlayer(player.getUniqueId()).getName();
     }
 
     @Override
@@ -51,7 +50,7 @@ public class CustomPlayerAdapter implements CustomPlayer {
     public void kickPlayer(String reason) {
         if (player.isOnline()) {
             Bukkit.getScheduler().runTask(MaximusBansBukkit.getInstance(), () -> {
-                ((Player) player).kickPlayer(reason);
+                ((Player) player).kickPlayer(ChatColor.RED + reason);
             });
         }
     }

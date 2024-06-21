@@ -3,6 +3,7 @@ package com.pincerdevelopment;
 import com.pincerdevelopment.Universal.CustomPlatform;
 import com.pincerdevelopment.Universal.CustomPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -64,4 +65,19 @@ public class BukkitPlatform implements CustomPlatform {
         }
         return null;
     }
+
+    public String getPlayerUsernameByUUID(UUID uuid) {
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+        if (offlinePlayer.hasPlayedBefore()) {
+            return offlinePlayer.getName();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String colorize(String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
 }

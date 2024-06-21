@@ -115,6 +115,7 @@ public class DataManager {
     public static CompletableFuture<Void> updatePardonInfo(Punishment punishment) {
         return CompletableFuture.runAsync(() -> {
             try {
+                System.out.println("trying to set pardo nreason");
                 punishmentDao.update(punishment);
             } catch (SQLException e) {
                 throw new RuntimeException(e);

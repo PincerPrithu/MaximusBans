@@ -1,7 +1,6 @@
 package com.pincerdevelopment.command;
 
 import com.pincerdevelopment.CustomPlayerAdapter;
-import com.pincerdevelopment.command.UnmuteCommand;
 import com.pincerdevelopment.Universal.CustomSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

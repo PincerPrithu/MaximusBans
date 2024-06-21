@@ -28,7 +28,7 @@ public class BanCommand {
 
         boolean isIPBan = IP_PATTERN.matcher(args[0]).matches();
         String targetIdentifier = args[0];
-        String reason = parseReason(args, 1, Main.getLang().getMessage("messages.general.default_ban_reason"));
+        String reason = parseReason(args, 1);
         String issuerUUID = getIssuerUUID(sender);
         Punishment.IssuerType issuerType = getIssuerType(sender, args);
         Date timeOfOccurrence = new Date();
@@ -57,7 +57,7 @@ public class BanCommand {
             return;
         }
 
-        String reason = parseReason(args, 2, Main.getLang().getMessage("messages.general.default_tempban_reason"));
+        String reason = parseReason(args, 2);
         String issuerUUID = getIssuerUUID(sender);
         Punishment.IssuerType issuerType = getIssuerType(sender, args);
         Date timeOfOccurrence = new Date();
@@ -88,7 +88,7 @@ public class BanCommand {
                             sender.sendMessage(Main.getLang().getMessage("messages.general.already_banned"));
                             return;
                         } else {
-                            punishment.setPardonFields(new Date(), issuerUUID, issuerType.name(), Main.getLang().getMessage("messages.general.ban_extended"));
+                            punishment.setPardonFields(new Date(), issuerUUID, issuerType.name(), Main.getLang().getMessage("messages.general.ban_extended_reason"));
                             DataManager.updatePunishment(punishment).join();
                         }
                     }
@@ -118,7 +118,7 @@ public class BanCommand {
                             sender.sendMessage(Main.getLang().getMessage("messages.general.ip_already_banned"));
                             return;
                         } else {
-                            punishment.setPardonFields(new Date(), issuerUUID, issuerType.name(), Main.getLang().getMessage("messages.general.ban_extended"));
+                            punishment.setPardonFields(new Date(), issuerUUID, issuerType.name(), Main.getLang().getMessage("messages.general.ban_extended_reason"));
                             DataManager.updatePunishment(punishment).join();
                         }
                     }
@@ -136,11 +136,11 @@ public class BanCommand {
         });
     }
 
-    private static String parseReason(String[] args, int startIndex, String defaultReason) {
-        StringBuilder reasonBuilder = new StringBuilder(defaultReason);
+    private static String parseReason(String[] args, int startIndex) {
+        StringBuilder reasonBuilder = new StringBuilder(Main.getLang().getMessage("messages.default_reason.ban"));
         for (int i = startIndex; i < args.length; i++) {
             if (!args[i].startsWith("-")) {
-                if (reasonBuilder.toString().equals(defaultReason)) {
+                if (reasonBuilder.toString().equals(Main.getLang().getMessage("messages.default_reason.ban"))) {
                     reasonBuilder = new StringBuilder(args[i]);
                 } else {
                     reasonBuilder.append(" ").append(args[i]);
