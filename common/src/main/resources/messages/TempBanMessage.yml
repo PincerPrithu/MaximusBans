@@ -9,5 +9,4 @@ tempban-message:
   - "&cDate Expiry: &7{dateExpiry}"
   - "&cBan ID: &7{id}"
   - ""
-  - "&cAppeal at: &7{appeal}"
   - "{footer}"

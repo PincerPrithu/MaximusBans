@@ -78,3 +78,9 @@ messages:
     ip_not_muted: "&cIP {ip} is not muted."
     failed: "&cFailed to unmute player: {error}"
     failed_ip: "&cFailed to unmute IP: {error}"
+
+screen:
+  footer:
+    - "&c&lAppeal at: &7{Set in language/en.yml}"
+    - "&9&lDiscord: &7{Set in language/en.yml}"
+    - "&c&lBuy an Unban: &7{Set in language/en.yml}"

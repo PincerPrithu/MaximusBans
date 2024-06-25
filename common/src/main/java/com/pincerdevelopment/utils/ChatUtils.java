@@ -1,5 +1,6 @@
 package com.pincerdevelopment.utils;
 
+import com.pincerdevelopment.LanguageManager;
 import com.pincerdevelopment.Main;
 import com.pincerdevelopment.Punishment;
 
@@ -47,10 +48,20 @@ public class ChatUtils {
         x = x.replace("{dateIssued}", formatDate(punishment.getTimeOfOccurrence()));
         x = x.replace("{dateExpiry}", formatDate(punishment.getTimeOfExpiry()));
         x = x.replace("{id}", punishment.getPunishmentID());
+        x = x.replace("{footer}", LanguageManager.getFooter());
 
         return (Main.getPlatform().colorize(x));
     }
-
+    public static String encode(List<String> list) {
+        String x = "";
+        for (String str : list) {
+            if (Objects.equals(x, ""))
+                x = str;
+            else
+                x = x + "\n" + str;
+        }
+        return (Main.getPlatform().colorize(x));
+    }
     public static List<String> decode(String str) {
         return List.of(str.split("\n"));
     }

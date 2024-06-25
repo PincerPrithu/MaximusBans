@@ -5,5 +5,4 @@ ban-message:
   - "&c&lBanned by: &7{issuer}"
   - "&c&lBan ID: &7{id}"
   - ""
-  - "&c&lAppeal at: &7{appeal}"
   - "{footer}"

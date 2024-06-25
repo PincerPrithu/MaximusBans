@@ -4,6 +4,8 @@ import com.pincerdevelopment.utils.ChatUtils;
 import com.pincerdevelopment.utils.FileUtils;
 import dev.dejvokep.boostedyaml.YamlDocument;
 
+import static com.pincerdevelopment.utils.ChatUtils.encode;
+
 public class LanguageManager {
     private static YamlDocument language;
 
@@ -34,10 +36,10 @@ public class LanguageManager {
             String value = placeholders[i + 1];
             message = message.replace("{" + placeholder + "}", value);
         }
-        System.out.println("----------------------------------------------------------------");
-        System.out.println("Retrieved message for key: " + key);
-        System.out.println("Message: " + message);
-        System.out.println("----------------------------------------------------------------");
+//        System.out.println("----------------------------------------------------------------");
+//        System.out.println("Retrieved message for key: " + key);
+//        System.out.println("Message: " + message);
+//        System.out.println("----------------------------------------------------------------");
         return message;
     }
 
@@ -52,17 +54,20 @@ public class LanguageManager {
     }
 
     public static String getBanMessage(Punishment punishment) {
-        return ChatUtils.encode(FileUtils.getConfig("BanMessage", FileUtils.FileType.MESSAGE).getStringList("ban-message"), punishment);
+        return encode(FileUtils.getConfig("BanMessage", FileUtils.FileType.MESSAGE).getStringList("ban-message"), punishment);
     }
 
     public static String getTempBanMessage(Punishment punishment) {
-        return ChatUtils.encode(FileUtils.getConfig("TempBanMessage", FileUtils.FileType.MESSAGE).getStringList("tempban-message"), punishment);
+        return encode(FileUtils.getConfig("TempBanMessage", FileUtils.FileType.MESSAGE).getStringList("tempban-message"), punishment);
     }
 
     public static String getBlacklistMessage(Punishment punishment) {
-        return ChatUtils.encode(FileUtils.getConfig("BlacklistMessage", FileUtils.FileType.MESSAGE).getStringList("blacklist-message"), punishment);
+        return encode(FileUtils.getConfig("BlacklistMessage", FileUtils.FileType.MESSAGE).getStringList("blacklist-message"), punishment);
     }
     public static String getKickMessage(Punishment punishment) {
-        return ChatUtils.encode(FileUtils.getConfig("KickMessage", FileUtils.FileType.MESSAGE).getStringList("kick-message"), punishment);
+        return encode(FileUtils.getConfig("KickMessage", FileUtils.FileType.MESSAGE).getStringList("kick-message"), punishment);
+    }
+    public static String getFooter() {
+        return encode(language.getStringList("screen.footer"));
     }
 }

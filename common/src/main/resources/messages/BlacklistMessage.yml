@@ -7,5 +7,4 @@ blacklist-message:
   - "&c&lBlacklist ID: &7{id}"
   - ""
   - "&c&lThis punishment cannot be appealed."
-  - "{footer}"
   - "&c========================================================="

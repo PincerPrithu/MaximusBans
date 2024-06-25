@@ -34,9 +34,9 @@ public class BanCommand {
         Date timeOfOccurrence = new Date();
 
         if (isIPBan) {
-            handleIPBan(sender, targetIdentifier, reason, issuerUUID, issuerType, timeOfOccurrence);
+            handleIPBan(sender, targetIdentifier, reason, issuerUUID, issuerType, timeOfOccurrence, null);
         } else {
-            handlePlayerBan(sender, targetIdentifier, reason, issuerUUID, issuerType, timeOfOccurrence, false);
+            handlePlayerBan(sender, targetIdentifier, reason, issuerUUID, issuerType, timeOfOccurrence, false, null);
         }
     }
 
@@ -70,7 +70,7 @@ public class BanCommand {
         }
     }
 
-    private static void handlePlayerBan(CustomSender sender, String targetIdentifier, String reason, String issuerUUID, Punishment.IssuerType issuerType, Date timeOfOccurrence, boolean isTempBan, Date... timeOfExpiry) {
+    private static void handlePlayerBan(CustomSender sender, String targetIdentifier, String reason, String issuerUUID, Punishment.IssuerType issuerType, Date timeOfOccurrence, boolean isTempBan, Date timeOfExpiry) {
         CustomPlayer target = Main.getPlatform().getPlayerByName(targetIdentifier);
         if (target == null) {
             sender.sendMessage(Main.getLang().getMessage("messages.general.player_not_found"));
@@ -84,7 +84,7 @@ public class BanCommand {
 
                 for (Punishment punishment : activePunishments) {
                     if (punishment.getPunishmentType() == Punishment.PunishmentType.BAN || punishment.getPunishmentType() == Punishment.PunishmentType.TEMPBAN) {
-                        if (punishment.isPermanent() || punishment.getTimeOfExpiry().after(timeOfExpiry.length > 0 ? timeOfExpiry[0] : timeOfOccurrence)) {
+                        if (punishment.isPermanent() || punishment.getTimeOfExpiry().after(timeOfExpiry != null ? timeOfExpiry : timeOfOccurrence)) {
                             sender.sendMessage(Main.getLang().getMessage("messages.general.already_banned"));
                             return;
                         } else {
@@ -93,8 +93,10 @@ public class BanCommand {
                         }
                     }
                 }
-
-                Punishment newPunishment = new Punishment(targetUUID, UUID.fromString(issuerUUID), issuerType.name(), isTempBan ? Punishment.PunishmentType.TEMPBAN : Punishment.PunishmentType.BAN, timeOfOccurrence, timeOfExpiry.length > 0 ? timeOfExpiry[0] : null, reason, target.getAddress(), false);
+                UUID uuid = null;
+                if (issuerUUID != null)
+                    uuid = UUID.fromString(issuerUUID);
+                Punishment newPunishment = new Punishment(targetUUID, uuid, issuerType.name(), isTempBan ? Punishment.PunishmentType.TEMPBAN : Punishment.PunishmentType.BAN, timeOfOccurrence, timeOfExpiry, reason, target.getAddress(), false);
                 DataManager.addPunishment(newPunishment);
                 if (target.isOnline()) {
                     target.kickPlayer(reason);
@@ -102,11 +104,12 @@ public class BanCommand {
                 sender.sendMessage(Main.getLang().getMessage(isTempBan ? "messages.general.player_temp_banned" : "messages.general.player_banned", "target", target.getName()));
             } catch (Exception e) {
                 sender.sendMessage(Main.getLang().getMessage("messages.general.ban_failed", "error", e.getMessage()));
+                e.printStackTrace();
             }
         });
     }
 
-    private static void handleIPBan(CustomSender sender, String ip, String reason, String issuerUUID, Punishment.IssuerType issuerType, Date timeOfOccurrence, Date... timeOfExpiry) {
+    private static void handleIPBan(CustomSender sender, String ip, String reason, String issuerUUID, Punishment.IssuerType issuerType, Date timeOfOccurrence, Date timeOfExpiry) {
         CompletableFuture.runAsync(() -> {
             try {
                 InetAddress playerIP = InetAddress.getByName(ip);
@@ -114,7 +117,7 @@ public class BanCommand {
 
                 for (Punishment punishment : activePunishments) {
                     if (punishment.getPunishmentType() == Punishment.PunishmentType.BAN || punishment.getPunishmentType() == Punishment.PunishmentType.TEMPBAN) {
-                        if (punishment.isPermanent() || punishment.getTimeOfExpiry().after(timeOfExpiry.length > 0 ? timeOfExpiry[0] : timeOfOccurrence)) {
+                        if (punishment.isPermanent() || punishment.getTimeOfExpiry().after(timeOfExpiry != null ? timeOfExpiry : timeOfOccurrence)) {
                             sender.sendMessage(Main.getLang().getMessage("messages.general.ip_already_banned"));
                             return;
                         } else {
@@ -123,15 +126,18 @@ public class BanCommand {
                         }
                     }
                 }
-
-                Punishment newPunishment = new Punishment(null, UUID.fromString(issuerUUID), issuerType.name(), timeOfExpiry.length > 0 ? Punishment.PunishmentType.TEMPBAN : Punishment.PunishmentType.BAN, timeOfOccurrence, timeOfExpiry.length > 0 ? timeOfExpiry[0] : null, reason, playerIP, true);
+                UUID uuid = null;
+                if (issuerUUID != null)
+                    uuid = UUID.fromString(issuerUUID);
+                Punishment newPunishment = new Punishment(null, uuid, issuerType.name(), timeOfExpiry != null ? Punishment.PunishmentType.TEMPBAN : Punishment.PunishmentType.BAN, timeOfOccurrence, timeOfExpiry, reason, playerIP, true);
                 DataManager.addPunishment(newPunishment);
                 banOnlinePlayersWithIP(playerIP, reason);
-                sender.sendMessage(Main.getLang().getMessage(timeOfExpiry.length > 0 ? "messages.general.ip_temp_banned" : "messages.general.ip_banned", "ip", ip));
+                sender.sendMessage(Main.getLang().getMessage(timeOfExpiry != null ? "messages.general.ip_temp_banned" : "messages.general.ip_banned", "ip", ip));
             } catch (UnknownHostException e) {
                 sender.sendMessage(Main.getLang().getMessage("messages.general.invalid_ip", "ip", ip));
             } catch (Exception e) {
                 sender.sendMessage(Main.getLang().getMessage("messages.general.ban_failed", "error", e.getMessage()));
+                e.printStackTrace();
             }
         });
     }
@@ -163,10 +169,6 @@ public class BanCommand {
             }
         }
         return sender.getType() == CustomSenderType.PLAYER ? Punishment.IssuerType.PLAYER : Punishment.IssuerType.CONSOLE;
-    }
-
-    private static boolean isPlayer(String targetIdentifier) {
-        return Main.getPlatform().getPlayerByName(targetIdentifier) != null;
     }
 
     private static void banOnlinePlayersWithIP(InetAddress ip, String reason) {
